@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Calendar, MapPin, ArrowRight, Sparkles, ExternalLink } from 'lucide-react';
 
 export const EventCard = ({ event, onSelect, onRegister }) => {
@@ -40,16 +39,17 @@ export const EventCard = ({ event, onSelect, onRegister }) => {
   const style = getVisualStyling(event.id);
 
   return (
-    <motion.div
-      whileHover={{ y: -10, transition: { duration: 0.25 } }}
-      className={`group relative flex flex-col rounded-3xl bg-[#0f0f17] border border-white/10 ${style.accentBorder} transition-all duration-300 shadow-2xl overflow-hidden`}
+    <div
+      className={`group relative flex flex-col rounded-3xl bg-[#0f0f17] border border-white/10 ${style.accentBorder} transition-all duration-300 shadow-2xl overflow-hidden hover:-translate-y-2.5`}
     >
       {/* Top Large Visual Area */}
       <div className="relative h-60 sm:h-68 w-full overflow-hidden">
-        {/* Background Image with Fallback and Zoom on Hover */}
+        {/* Background Image with Zoom on Hover */}
         <img
           src={style.image}
           alt={event.title}
+          width="800"
+          height="400"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-70 group-hover:opacity-90"
           loading="lazy"
         />
@@ -131,6 +131,6 @@ export const EventCard = ({ event, onSelect, onRegister }) => {
           </button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
