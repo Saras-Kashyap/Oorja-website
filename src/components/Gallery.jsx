@@ -114,6 +114,8 @@ export const Gallery = () => {
                 <img
                   src={item.image}
                   alt={item.title}
+                  width="800"
+                  height="600"
                   className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 brightness-90 group-hover:brightness-100"
                   loading="lazy"
                 />

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Compass } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { EVENTS_DATA } from '../data/events';
 import { EventCard } from './EventCard';
-import { EventModal } from './EventModal';
+
+// Lazy-load modal — only needed when user clicks a card
+const EventModal = lazy(() => import('./EventModal').then(m => ({ default: m.EventModal })));
 
 export const Events = ({ onRegisterEvent }) => {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -15,9 +17,14 @@ export const Events = ({ onRegisterEvent }) => {
   };
 
   const handleRegister = (eventId) => {
-    const target = EVENTS_DATA.find((e) => e.id === eventId) || EVENTS_DATA[2];
-    setSelectedEvent(target);
-    setIsModalOpen(true);
+    // Bubble up to parent (Home) for fresher-event; open local modal for others
+    if (onRegisterEvent) {
+      onRegisterEvent(eventId);
+    } else {
+      const target = EVENTS_DATA.find((e) => e.id === eventId) || EVENTS_DATA[2];
+      setSelectedEvent(target);
+      setIsModalOpen(true);
+    }
   };
 
   return (
@@ -99,12 +106,16 @@ export const Events = ({ onRegisterEvent }) => {
 
       </div>
 
-      {/* Interactive Modal */}
-      <EventModal
-        event={selectedEvent}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      {/* Interactive Modal — only mounted when open */}
+      {isModalOpen && (
+        <Suspense fallback={null}>
+          <EventModal
+            event={selectedEvent}
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+        </Suspense>
+      )}
     </section>
   );
 };
