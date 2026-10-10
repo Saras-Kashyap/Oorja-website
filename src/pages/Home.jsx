@@ -39,9 +39,6 @@ export const Home = () => {
           onSelectEvent={handleSelectEvent}
         />
 
-        {/* About Section with Core Values & Campus Facts Strip */}
-        <About />
-
         {/* Signature Events (Zion, Deep Sandhya, Fresher Event) */}
         <Events onRegisterEvent={handleOpenRegister} />
 
@@ -53,6 +50,9 @@ export const Home = () => {
 
         {/* Leadership Council Team */}
         <Team />
+
+        {/* About Section with Core Values & Campus Facts Strip */}
+        <About />
 
         {/* Contact with Form Validation & Map Embed */}
         <Contact />
