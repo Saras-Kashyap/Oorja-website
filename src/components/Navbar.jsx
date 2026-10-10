@@ -9,11 +9,11 @@ export const Navbar = ({ onOpenRegister }) => {
 
   const navLinks = [
     { label: 'Home', href: '#home', id: 'home' },
-    { label: 'About', href: '#about', id: 'about' },
     { label: 'Events', href: '#events', id: 'events' },
     { label: 'Fresher Special', href: '#fresher', id: 'fresher' },
     { label: 'Gallery', href: '#gallery', id: 'gallery' },
     { label: 'Team', href: '#team', id: 'team' },
+    { label: 'About', href: '#about', id: 'about' },
     { label: 'Contact', href: '#contact', id: 'contact' },
   ];
 
@@ -26,7 +26,7 @@ export const Navbar = ({ onOpenRegister }) => {
       }
 
       // Determine active section based on scroll position
-      const sections = ['home', 'about', 'events', 'fresher', 'gallery', 'team', 'contact'];
+      const sections = ['home', 'events', 'fresher', 'gallery', 'team', 'about', 'contact'];
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {
