@@ -115,3 +115,13 @@ Available endpoints:
 npm run build
 npm run preview
 ```
+
+### 5. Netlify Deployment
+This site uses Vite, not Next.js. `netlify.toml` sets the build command to
+`npm run build` and publishes `dist`, overriding the dashboard build settings.
+It also serves `index.html` for client-side routes such as `/event/:eventId`.
+
+The configuration sets `NETLIFY_NEXT_PLUGIN_SKIP=true` to bypass the Next.js
+plugin and prevent automatic installation while unused Next.js dependencies
+remain in the project. Remove `@netlify/plugin-nextjs` from the site's build
+plugins in the Netlify dashboard; it is not needed for this Vite site.
