@@ -9,7 +9,7 @@
 
   body {
     font-family: var(--font-body);
-    background-color: #07070a;
+    background-color: #070710;
     color: #f4eee4;
     overflow-x: hidden;
   }
@@ -94,3 +94,142 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #d97706;
 }
+
+/* ==========================================================================
+   PARTY-THEMED AMBIENT BACKGROUND ANIMATIONS (HARDWARE-ACCELERATED 60FPS)
+   Only animates transform & opacity on compositor thread for zero scroll lag
+   ========================================================================== */
+
+@keyframes partyGlowFloat1 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.65;
+  }
+  33% {
+    transform: translate3d(80px, -50px, 0) scale(1.15);
+    opacity: 0.85;
+  }
+  66% {
+    transform: translate3d(-60px, 60px, 0) scale(0.92);
+    opacity: 0.55;
+  }
+}
+
+@keyframes partyGlowFloat2 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1.05);
+    opacity: 0.6;
+  }
+  40% {
+    transform: translate3d(-90px, 50px, 0) scale(0.88);
+    opacity: 0.8;
+  }
+  80% {
+    transform: translate3d(70px, -70px, 0) scale(1.18);
+    opacity: 0.55;
+  }
+}
+
+@keyframes partyGlowFloat3 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(60px, 70px, 0) scale(1.12);
+    opacity: 0.75;
+  }
+}
+
+@keyframes partyGlowFloat4 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(0.95);
+    opacity: 0.5;
+  }
+  45% {
+    transform: translate3d(-50px, -60px, 0) scale(1.1);
+    opacity: 0.75;
+  }
+  85% {
+    transform: translate3d(60px, 40px, 0) scale(1.02);
+    opacity: 0.6;
+  }
+}
+
+@keyframes concertBeamSweep {
+  0%, 100% {
+    transform: rotate(-18deg) scaleY(1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: rotate(18deg) scaleY(1.15);
+    opacity: 0.55;
+  }
+}
+
+@keyframes concertBeamSweepReverse {
+  0%, 100% {
+    transform: rotate(20deg) scaleY(1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: rotate(-15deg) scaleY(1.15);
+    opacity: 0.5;
+  }
+}
+
+.party-blob-1 {
+  animation: partyGlowFloat1 18s ease-in-out infinite;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.party-blob-2 {
+  animation: partyGlowFloat2 24s ease-in-out infinite;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.party-blob-3 {
+  animation: partyGlowFloat3 20s ease-in-out infinite;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.party-blob-4 {
+  animation: partyGlowFloat4 26s ease-in-out infinite;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.concert-beam-sweep-left {
+  animation: concertBeamSweep 22s ease-in-out infinite;
+  transform-origin: bottom left;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.concert-beam-sweep-right {
+  animation: concertBeamSweepReverse 25s ease-in-out infinite;
+  transform-origin: bottom right;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .party-blob-1,
+  .party-blob-2,
+  .party-blob-3,
+  .party-blob-4,
+  .concert-beam-sweep-left,
+  .concert-beam-sweep-right {
+    animation: none !important;
+  }
+}
+

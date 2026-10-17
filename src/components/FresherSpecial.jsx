@@ -24,16 +24,17 @@ export const FresherSpecial = ({ onRegister }) => {
   };
 
   return (
-    <section id="fresher" className="relative py-28 bg-[#0a0a10] text-[#f4eee4] overflow-hidden">
+    <section id="fresher" className="relative py-28 bg-[#0a0a18]/75 text-[#f4eee4] overflow-hidden backdrop-blur-[2px]">
       {/* Visual Lighting Effect */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.12)_0%,transparent_70%)] pointer-events-none" />
-      <div className="absolute top-1/2 -left-20 w-80 h-80 bg-rose-500/10 blur-[130px] rounded-full pointer-events-none" />
-      <div className="absolute top-1/2 -right-20 w-80 h-80 bg-amber-400/10 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(236,72,153,0.12)_0%,rgba(168,85,247,0.08)_40%,transparent_70%)] pointer-events-none" />
+      <div className="absolute top-1/2 -left-20 w-96 h-96 bg-rose-500/15 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 -right-20 w-96 h-96 bg-amber-400/15 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute -top-10 left-1/3 w-80 h-80 bg-indigo-500/12 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Glow Container Card */}
-        <div className="relative rounded-3xl p-8 sm:p-14 lg:p-16 bg-gradient-to-b from-[#161622]/90 to-[#0e0e15]/95 border border-amber-500/40 shadow-[0_0_50px_rgba(245,158,11,0.15)] overflow-hidden text-center">
+        <div className="relative rounded-3xl p-8 sm:p-14 lg:p-16 bg-gradient-to-b from-[#161628]/95 to-[#0d0d18]/98 border border-amber-500/40 shadow-[0_0_60px_rgba(245,158,11,0.2),0_0_30px_rgba(168,85,247,0.15)] overflow-hidden text-center backdrop-blur-xl">
           
           {/* Subtle Decorative Backdrop Elements */}
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent" />

@@ -22,9 +22,11 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="relative bg-[#040407] text-[#f4eee4] border-t border-amber-500/20 pt-16 pb-12 overflow-hidden">
+    <footer className="relative bg-[#05050f]/85 text-[#f4eee4] border-t border-amber-500/25 pt-16 pb-12 overflow-hidden backdrop-blur-md">
       {/* Background Ambience */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-b from-amber-500/5 to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-b from-amber-500/10 via-purple-500/5 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/10 blur-[130px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-amber-500/10 blur-[130px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12 border-b border-white/10">

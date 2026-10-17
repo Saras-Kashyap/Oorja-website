@@ -1,6 +1,40 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Calendar, MapPin, Play, ArrowRight, ChevronDown } from 'lucide-react';
+import { Calendar, MapPin, Play, ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+
+// Curated full-screen immersive background photos of cultural festivals & concerts
+const HERO_SLIDES = [
+  {
+    id: 'zion-concert',
+    url: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1920&q=80',
+    title: 'ZION Mega Fest',
+    subtitle: 'Headline Concert & Electric Energy',
+  },
+  {
+    id: 'deep-sandhya-lights',
+    url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1920&q=80',
+    title: 'Deep Sandhya',
+    subtitle: 'Candlelight & Cultural Grace',
+  },
+  {
+    id: 'band-riffs',
+    url: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1920&q=80',
+    title: 'War of the Bands',
+    subtitle: 'Pulsating Stage & Laser Beams',
+  },
+  {
+    id: 'aarambh-fresher',
+    url: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1920&q=80',
+    title: 'Aarambh Fresher Night',
+    subtitle: 'Youth, Vibrance & Festival Lights',
+  },
+  {
+    id: 'symphony-stage',
+    url: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=1920&q=80',
+    title: 'Symphony of Lights',
+    subtitle: 'Celebration of Music and Expression',
+  },
+];
 
 // Static config inline — avoids importing full college.js just for hero
 const TARGET_DATE = new Date('2026-11-06T00:00:00');
@@ -19,7 +53,18 @@ const calcTimeLeft = () => {
 export const Hero = ({ onOpenRegister }) => {
   const shouldReduceMotion = useReducedMotion();
   const [timeLeft, setTimeLeft] = useState(calcTimeLeft);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
+  // Preload background images so crossfade transitions are instantaneous
+  useEffect(() => {
+    HERO_SLIDES.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.url;
+    });
+  }, []);
+
+  // Countdown timer interval
   useEffect(() => {
     const interval = setInterval(() => {
       const remaining = calcTimeLeft();
@@ -29,38 +74,89 @@ export const Hero = ({ onOpenRegister }) => {
     return () => clearInterval(interval);
   }, []);
 
+  // 4-second automatic crossfade transition
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isPaused, currentSlide]);
+
+  const handleNext = () => {
+    setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+  };
+
+  const handleDotClick = (index) => {
+    setCurrentSlide(index);
+  };
+
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Respect prefers-reduced-motion: skip particle animations entirely
-  const particleTransition = shouldReduceMotion
-    ? { duration: 0 }
-    : undefined;
-
   return (
     <section
       id="home"
-      className="relative min-h-screen w-full flex flex-col justify-between items-center pt-24 pb-8 overflow-hidden bg-[#060609]"
+      className="relative min-h-screen w-full flex flex-col justify-between items-center pt-24 pb-8 overflow-hidden bg-[#06060e]"
+      aria-roledescription="carousel"
+      aria-label="OORJA Cultural Club Hero with Event Highlights"
     >
       {/* ==============================================================
-          CINEMATIC STAGE BACKGROUND
+          1. FULL-SCREEN BACKGROUND IMAGE SLIDESHOW (CAROUSEL)
           ============================================================== */}
-      
-      {/* Stage beams — CSS only, no JS animation cost */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute -bottom-20 -left-20 w-[600px] h-[800px] bg-gradient-to-tr from-amber-500/25 via-amber-600/10 to-transparent blur-3xl transform -rotate-12 pointer-events-none" />
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        {HERO_SLIDES.map((slide, index) => {
+          const isActive = index === currentSlide;
+          return (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+                isActive ? 'opacity-100 z-0' : 'opacity-0 -z-10'
+              }`}
+            >
+              <img
+                src={slide.url}
+                alt={slide.title}
+                className={`w-full h-full object-cover object-center transform transition-transform duration-[6000ms] ease-out ${
+                  isActive && !shouldReduceMotion ? 'scale-105' : 'scale-100'
+                }`}
+                loading={index === 0 ? 'eager' : 'lazy'}
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ==============================================================
+          2. DARK GRADIENT & VIGNETTE OVERLAY (rgba 0.60 to 0.75+)
+          Ensures high contrast & pristine readability for text & logo
+          ============================================================== */}
+      <div
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          background:
+            'radial-gradient(ellipse at center, rgba(6, 6, 9, 0.60) 0%, rgba(6, 6, 9, 0.75) 65%, rgba(6, 6, 9, 0.95) 100%), linear-gradient(to bottom, rgba(6, 6, 9, 0.75) 0%, rgba(6, 6, 9, 0.60) 35%, rgba(6, 6, 9, 0.75) 75%, rgba(6, 6, 9, 0.98) 100%)',
+        }}
+      />
+
+      {/* ==============================================================
+          3. CINEMATIC STAGE BEAMS & SPOTLIGHTS
+          ============================================================== */}
+      <div className="pointer-events-none absolute inset-0 z-[2] overflow-hidden">
+        <div className="absolute -bottom-20 -left-20 w-[600px] h-[800px] bg-gradient-to-tr from-amber-500/20 via-amber-600/10 to-transparent blur-3xl transform -rotate-12 pointer-events-none" />
         <div className="absolute top-1/4 left-1/4 w-[400px] h-[600px] bg-amber-400/10 blur-[120px] rounded-full pointer-events-none" />
         
         {/* Right Stage Beam (Magenta / Purple) */}
-        <div className="absolute -bottom-20 -right-20 w-[650px] h-[850px] bg-gradient-to-tl from-fuchsia-600/20 via-purple-600/10 to-transparent blur-3xl transform rotate-12 pointer-events-none" />
+        <div className="absolute -bottom-20 -right-20 w-[650px] h-[850px] bg-gradient-to-tl from-fuchsia-600/15 via-purple-600/10 to-transparent blur-3xl transform rotate-12 pointer-events-none" />
         <div className="absolute top-1/4 right-1/4 w-[400px] h-[600px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none" />
 
         {/* Center Golden Spotlight Beam */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[radial-gradient(ellipse_at_top,rgba(251,191,36,0.18)_0%,rgba(245,158,11,0.05)_50%,transparent_75%)] pointer-events-none" />
-
-        {/* Ambient Radial Vignette */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,#060609_90%)] pointer-events-none" />
       </div>
 
       {/* LEFT GEOMETRIC TRIBAL / SACRED ARCH COLUMN */}
@@ -243,16 +339,74 @@ export const Hero = ({ onOpenRegister }) => {
             <span>Join OORJA</span>
           </button>
         </motion.div>
+
+        {/* ==============================================================
+            CAROUSEL CONTROLS: SUBTLE DOT INDICATORS & EVENT BADGE
+            ============================================================== */}
+        <div
+          className="mt-6 flex flex-col items-center gap-2 z-20 pointer-events-auto"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Subtle caption pill indicating current event backdrop */}
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/50 border border-white/10 backdrop-blur-md text-[10px] sm:text-[11px] text-amber-200/90 tracking-wider uppercase font-medium shadow-sm">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+            <span>{HERO_SLIDES[currentSlide].title}</span>
+            <span className="text-white/20">•</span>
+            <span className="text-neutral-400 font-mono text-[10px]">{currentSlide + 1}/{HERO_SLIDES.length}</span>
+          </div>
+
+          {/* Dot Indicators */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {HERO_SLIDES.map((slide, idx) => (
+              <button
+                key={slide.id}
+                onClick={() => handleDotClick(idx)}
+                className={`transition-all duration-300 rounded-full cursor-pointer focus:outline-none ${
+                  idx === currentSlide
+                    ? 'w-6 sm:w-7 h-1.5 bg-gradient-to-r from-amber-400 to-yellow-300 shadow-[0_0_8px_rgba(251,191,36,0.7)]'
+                    : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/60'
+                }`}
+                aria-label={`Go to slide ${idx + 1}: ${slide.title}`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
+
+      {/* ==============================================================
+          MANUAL CONTROLS: SUBTLE NEXT / PREV ARROWS
+          ============================================================== */}
+      <button
+        onClick={handlePrev}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        className="absolute left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 z-30 p-2 sm:p-2.5 rounded-full bg-black/30 hover:bg-black/60 text-white/50 hover:text-amber-300 border border-white/10 hover:border-amber-400/40 backdrop-blur-md opacity-40 hover:opacity-100 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-1 focus:ring-amber-400/50 shadow-md shadow-black/40"
+        aria-label="Previous background photo"
+        title="Previous photo"
+      >
+        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+      </button>
+
+      <button
+        onClick={handleNext}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        className="absolute right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 z-30 p-2 sm:p-2.5 rounded-full bg-black/30 hover:bg-black/60 text-white/50 hover:text-amber-300 border border-white/10 hover:border-amber-400/40 backdrop-blur-md opacity-40 hover:opacity-100 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-1 focus:ring-amber-400/50 shadow-md shadow-black/40"
+        aria-label="Next background photo"
+        title="Next photo"
+      >
+        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+      </button>
 
       {/* ==============================================================
           BOTTOM AUDIENCE CROWD SILHOUETTE
           ============================================================== */}
       <div className="relative w-full z-10 pointer-events-none mt-6 sm:mt-8">
         {/* Subtle Crowd Silhouette SVG */}
-        <div className="w-full h-20 sm:h-28 bg-gradient-to-t from-black via-black/80 to-transparent opacity-85 flex items-end justify-center overflow-hidden">
+        <div className="w-full h-20 sm:h-28 bg-gradient-to-t from-[#070712] via-[#06060e]/80 to-transparent opacity-90 flex items-end justify-center overflow-hidden">
           <svg
-            className="w-full h-16 sm:h-24 text-[#060609] fill-current opacity-90 scale-105"
+            className="w-full h-16 sm:h-24 text-[#06060e] fill-current opacity-95 scale-105"
             viewBox="0 0 1200 120"
             preserveAspectRatio="none"
             aria-hidden="true"

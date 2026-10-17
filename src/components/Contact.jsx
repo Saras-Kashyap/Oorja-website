@@ -60,9 +60,11 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative py-28 bg-[#06060a] text-[#f4eee4] overflow-hidden">
-      {/* Subtle Background Glow */}
-      <div className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-amber-500/5 blur-[160px] pointer-events-none rounded-full" />
+    <section id="contact" className="relative py-28 bg-[#060610]/75 text-[#f4eee4] overflow-hidden backdrop-blur-[2px]">
+      {/* Dynamic Party Glow Accents */}
+      <div className="absolute top-1/4 left-1/3 w-[650px] h-[650px] bg-amber-500/12 blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute top-10 right-10 w-[550px] h-[550px] bg-purple-600/12 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-10 left-10 w-[500px] h-[500px] bg-indigo-600/10 blur-[140px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
