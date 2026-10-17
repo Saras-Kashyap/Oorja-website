@@ -28,9 +28,11 @@ export const Events = ({ onRegisterEvent }) => {
   };
 
   return (
-    <section id="events" className="relative py-28 bg-[#07070c] text-[#f4eee4] overflow-hidden">
-      {/* Background Lighting Elements */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-amber-500/5 blur-[150px] pointer-events-none rounded-full" />
+    <section id="events" className="relative py-28 bg-[#070712]/75 text-[#f4eee4] overflow-hidden backdrop-blur-[2px]">
+      {/* Dynamic Party Stage Glow Elements */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-gradient-to-r from-amber-500/15 via-orange-600/10 to-transparent blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute -top-12 -right-16 w-[600px] h-[600px] bg-purple-600/12 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute -bottom-16 -left-16 w-[600px] h-[600px] bg-indigo-600/12 blur-[150px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         

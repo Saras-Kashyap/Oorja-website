@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar, Clock, MapPin, Sparkles, CheckCircle2, Send, Share
 import { EVENTS_DATA } from '../data/events';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { PartyAmbientBackground } from '../components/PartyAmbientBackground';
 import confetti from 'canvas-confetti';
 
 export const EventDetails = () => {
@@ -35,10 +36,13 @@ export const EventDetails = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#07070a] text-[#f4eee4]">
+    <div className="relative min-h-screen bg-[#070710] text-[#f4eee4]">
+      {/* Global Vibrant Party Ambient Stage Background */}
+      <PartyAmbientBackground />
+
       <Navbar />
 
-      <div className="pt-28 pb-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 pt-28 pb-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Back Link */}
         <Link

@@ -12,10 +12,11 @@ export const About = () => {
   };
 
   return (
-    <section id="about" className="relative py-28 bg-[#09090f] text-[#f4eee4] overflow-hidden">
-      {/* Background Ambience */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 blur-[140px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/5 blur-[140px] pointer-events-none rounded-full" />
+    <section id="about" className="relative py-28 bg-[#080814]/75 text-[#f4eee4] overflow-hidden backdrop-blur-[2px]">
+      {/* Background Ambience & Party Glows */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-500/12 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-600/12 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 blur-[140px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         

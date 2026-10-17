@@ -4,6 +4,7 @@ import { Hero } from '../components/Hero';
 import { Events } from '../components/Events';
 import { FresherSpecial } from '../components/FresherSpecial';
 import { Footer } from '../components/Footer';
+import { PartyAmbientBackground } from '../components/PartyAmbientBackground';
 import { EVENTS_DATA } from '../data/events';
 
 // Below-the-fold sections — lazy-loaded for faster initial paint
@@ -36,12 +37,15 @@ export const Home = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#07070a] text-[#f4eee4] selection:bg-amber-500 selection:text-black">
+    <div className="relative min-h-screen bg-[#070710] text-[#f4eee4] selection:bg-amber-500 selection:text-black">
+      {/* Global Vibrant Party Ambient Stage Background */}
+      <PartyAmbientBackground />
+
       {/* Sticky Navigation */}
       <Navbar onOpenRegister={handleOpenRegister} />
 
       {/* Main Sections */}
-      <main>
+      <main className="relative z-10">
         {/* Hero — eagerly loaded (above the fold) */}
         <Hero
           onOpenRegister={handleOpenRegister}

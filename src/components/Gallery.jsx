@@ -47,9 +47,11 @@ export const Gallery = () => {
   }, [activeImageIndex]);
 
   return (
-    <section id="gallery" className="relative py-28 bg-[#07070a] text-[#f4eee4] overflow-hidden">
-      {/* Background Accent */}
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-500/5 blur-[120px] pointer-events-none rounded-full" />
+    <section id="gallery" className="relative py-28 bg-[#070712]/75 text-[#f4eee4] overflow-hidden backdrop-blur-[2px]">
+      {/* Background Party Glow Accents */}
+      <div className="absolute top-10 left-10 w-[550px] h-[550px] bg-purple-600/12 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-10 right-10 w-[600px] h-[600px] bg-amber-500/12 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-indigo-600/10 blur-[140px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
