@@ -10,7 +10,6 @@ export const Footer = () => {
     { label: 'Events', href: '#events' },
     { label: 'Gallery', href: '#gallery' },
     { label: 'Team', href: '#team' },
-    { label: 'Contact', href: '#contact' },
   ];
 
   const collegeLinks = [

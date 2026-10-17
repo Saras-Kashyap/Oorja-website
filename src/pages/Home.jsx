@@ -10,7 +10,6 @@ import { EVENTS_DATA } from '../data/events';
 const Gallery = lazy(() => import('../components/Gallery').then(m => ({ default: m.Gallery })));
 const Team = lazy(() => import('../components/Team').then(m => ({ default: m.Team })));
 const About = lazy(() => import('../components/About').then(m => ({ default: m.About })));
-const Contact = lazy(() => import('../components/Contact').then(m => ({ default: m.Contact })));
 const EventModal = lazy(() => import('../components/EventModal').then(m => ({ default: m.EventModal })));
 
 // Minimal skeleton placeholder — preserves height to avoid layout shift
@@ -68,11 +67,6 @@ export const Home = () => {
         <Suspense fallback={<SectionSkeleton />}>
           {/* About Section with Core Values & Campus Facts Strip */}
           <About />
-        </Suspense>
-
-        <Suspense fallback={<SectionSkeleton />}>
-          {/* Contact with Form Validation & Map Embed */}
-          <Contact />
         </Suspense>
       </main>
 

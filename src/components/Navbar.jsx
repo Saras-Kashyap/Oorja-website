@@ -13,7 +13,6 @@ export const Navbar = ({ onOpenRegister }) => {
     { label: 'Gallery', href: '#gallery', id: 'gallery' },
     { label: 'Team', href: '#team', id: 'team' },
     { label: 'About', href: '#about', id: 'about' },
-    { label: 'Contact', href: '#contact', id: 'contact' },
   ];
 
   useEffect(() => {
@@ -25,7 +24,7 @@ export const Navbar = ({ onOpenRegister }) => {
       }
 
       // Determine active section based on scroll position
-      const sections = ['home', 'events', 'gallery', 'team', 'about', 'contact'];
+      const sections = ['home', 'events', 'gallery', 'team', 'about'];
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {

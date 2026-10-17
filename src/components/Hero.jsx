@@ -181,30 +181,30 @@ export const Hero = ({ onOpenRegister }) => {
       </div>
 
       {/* ==============================================================
-          2. DARK GRADIENT & VIGNETTE OVERLAY (rgba 0.60 to 0.75+)
-          Ensures high contrast & pristine readability for text & logo
+          2. CRYSTAL-CLEAR GRADIENT & VIGNETTE OVERLAY
+          High-transparency overlay allowing background event photos to shine through
           ============================================================== */}
       <div
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(6, 6, 9, 0.60) 0%, rgba(6, 6, 9, 0.75) 65%, rgba(6, 6, 9, 0.95) 100%), linear-gradient(to bottom, rgba(6, 6, 9, 0.75) 0%, rgba(6, 6, 9, 0.60) 35%, rgba(6, 6, 9, 0.75) 75%, rgba(6, 6, 9, 0.98) 100%)',
+            'radial-gradient(ellipse at center, rgba(6, 6, 9, 0.15) 0%, rgba(6, 6, 9, 0.35) 65%, rgba(6, 6, 9, 0.85) 100%), linear-gradient(to bottom, rgba(6, 6, 9, 0.60) 0%, rgba(6, 6, 9, 0.10) 30%, rgba(6, 6, 9, 0.30) 75%, rgba(6, 6, 9, 0.92) 100%)',
         }}
       />
 
       {/* ==============================================================
-          3. CINEMATIC STAGE BEAMS & SPOTLIGHTS
+          3. CINEMATIC STAGE BEAMS & SPOTLIGHTS (TRANSPARENT ACCENTS)
           ============================================================== */}
       <div className="pointer-events-none absolute inset-0 z-[2] overflow-hidden">
-        <div className="absolute -bottom-20 -left-20 w-[600px] h-[800px] bg-gradient-to-tr from-amber-500/20 via-amber-600/10 to-transparent blur-3xl transform -rotate-12 pointer-events-none" />
-        <div className="absolute top-1/4 left-1/4 w-[400px] h-[600px] bg-amber-400/10 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-[600px] h-[800px] bg-gradient-to-tr from-amber-500/15 via-amber-600/5 to-transparent blur-3xl transform -rotate-12 pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-[400px] h-[600px] bg-amber-400/8 blur-[120px] rounded-full pointer-events-none" />
         
         {/* Right Stage Beam (Magenta / Purple) */}
-        <div className="absolute -bottom-20 -right-20 w-[650px] h-[850px] bg-gradient-to-tl from-fuchsia-600/15 via-purple-600/10 to-transparent blur-3xl transform rotate-12 pointer-events-none" />
-        <div className="absolute top-1/4 right-1/4 w-[400px] h-[600px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute -bottom-20 -right-20 w-[650px] h-[850px] bg-gradient-to-tl from-fuchsia-600/10 via-purple-600/5 to-transparent blur-3xl transform rotate-12 pointer-events-none" />
+        <div className="absolute top-1/4 right-1/4 w-[400px] h-[600px] bg-purple-500/8 blur-[120px] rounded-full pointer-events-none" />
 
         {/* Center Golden Spotlight Beam */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[radial-gradient(ellipse_at_top,rgba(251,191,36,0.18)_0%,rgba(245,158,11,0.05)_50%,transparent_75%)] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[radial-gradient(ellipse_at_top,rgba(251,191,36,0.12)_0%,rgba(245,158,11,0.03)_50%,transparent_75%)] pointer-events-none" />
       </div>
 
       {/* LEFT GEOMETRIC TRIBAL / SACRED ARCH COLUMN */}
@@ -306,35 +306,35 @@ export const Hero = ({ onOpenRegister }) => {
           className="flex flex-col items-center justify-center gap-1.5 mb-5 text-center mix-blend-screen"
         >
           {/* "Scintillating The Aura" Tagline */}
-          <div className="flex items-center justify-center gap-3 opacity-70">
+          <div className="flex items-center justify-center gap-3 opacity-75">
             <span className="w-8 sm:w-14 h-px bg-gradient-to-r from-transparent to-amber-300/50" />
-            <p className="font-cormorant italic text-base sm:text-lg md:text-xl text-amber-200/90 tracking-widest font-normal drop-shadow-[0_0_12px_rgba(245,158,11,0.3)]">
+            <p className="font-cormorant italic text-base sm:text-lg md:text-xl text-amber-200/90 tracking-widest font-normal drop-shadow-md drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]">
               Scintillating The Aura
             </p>
             <span className="w-8 sm:w-14 h-px bg-gradient-to-l from-transparent to-amber-300/50" />
           </div>
 
-          <p className="text-xs sm:text-sm md:text-base font-semibold tracking-[0.25em] uppercase text-amber-200/70 drop-shadow-[0_0_10px_rgba(245,158,11,0.25)]">
+          <p className="text-xs sm:text-sm md:text-base font-semibold tracking-[0.25em] uppercase text-amber-200/75 drop-shadow-md drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]">
             COER UNIVERSITY • ROORKEE
           </p>
-          <p className="text-[11px] sm:text-xs md:text-sm tracking-wider uppercase text-amber-400/65 font-medium">
+          <p className="text-[11px] sm:text-xs md:text-sm tracking-wider uppercase text-amber-400/70 font-medium drop-shadow-md drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
             • A Cultural Club of COER University
           </p>
         </motion.div>
 
-        {/* DATE & VENUE PILL ROW */}
+        {/* DATE & VENUE PILL ROW (HIGH-TRANSPARENCY CONTAINER) */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.55 }}
           className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-[#e8ded0]"
         >
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 border border-white/10 backdrop-blur-md">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/25 hover:bg-black/40 border border-white/15 backdrop-blur-md transition-colors shadow-sm">
             <Calendar className="w-4 h-4 text-amber-400" />
             <span className="font-medium tracking-wide">6 NOVEMBER [DEEP SHANDHYA]</span>
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 border border-white/10 backdrop-blur-md">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/25 hover:bg-black/40 border border-white/15 backdrop-blur-md transition-colors shadow-sm">
             <MapPin className="w-4 h-4 text-amber-400" />
             <span className="font-medium tracking-wide">COER University Campus, Roorkee</span>
           </div>
@@ -406,8 +406,8 @@ export const Hero = ({ onOpenRegister }) => {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Subtle caption pill indicating current event backdrop */}
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/50 border border-white/10 backdrop-blur-md text-[10px] sm:text-[11px] text-amber-200/90 tracking-wider uppercase font-medium shadow-sm">
+          {/* Subtle caption pill indicating current event backdrop (high-transparency) */}
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/25 border border-white/15 backdrop-blur-md text-[10px] sm:text-[11px] text-amber-200/90 tracking-wider uppercase font-medium shadow-sm">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
             <span>{HERO_SLIDES[currentSlide].title}</span>
             <span className="text-white/20">•</span>
@@ -439,7 +439,7 @@ export const Hero = ({ onOpenRegister }) => {
         onClick={handlePrev}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
-        className="absolute left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 z-30 p-2 sm:p-2.5 rounded-full bg-black/30 hover:bg-black/60 text-white/50 hover:text-amber-300 border border-white/10 hover:border-amber-400/40 backdrop-blur-md opacity-40 hover:opacity-100 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-1 focus:ring-amber-400/50 shadow-md shadow-black/40"
+        className="absolute left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 z-30 p-2 sm:p-2.5 rounded-full bg-black/20 hover:bg-black/50 text-white/60 hover:text-amber-300 border border-white/15 hover:border-amber-400/40 backdrop-blur-md opacity-50 hover:opacity-100 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-1 focus:ring-amber-400/50 shadow-md shadow-black/40"
         aria-label="Previous background photo"
         title="Previous photo"
       >
@@ -450,7 +450,7 @@ export const Hero = ({ onOpenRegister }) => {
         onClick={handleNext}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
-        className="absolute right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 z-30 p-2 sm:p-2.5 rounded-full bg-black/30 hover:bg-black/60 text-white/50 hover:text-amber-300 border border-white/10 hover:border-amber-400/40 backdrop-blur-md opacity-40 hover:opacity-100 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-1 focus:ring-amber-400/50 shadow-md shadow-black/40"
+        className="absolute right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 z-30 p-2 sm:p-2.5 rounded-full bg-black/20 hover:bg-black/50 text-white/60 hover:text-amber-300 border border-white/15 hover:border-amber-400/40 backdrop-blur-md opacity-50 hover:opacity-100 transition-all duration-300 cursor-pointer focus:outline-none focus:ring-1 focus:ring-amber-400/50 shadow-md shadow-black/40"
         aria-label="Next background photo"
         title="Next photo"
       >
@@ -461,8 +461,8 @@ export const Hero = ({ onOpenRegister }) => {
           BOTTOM AUDIENCE CROWD SILHOUETTE
           ============================================================== */}
       <div className="relative w-full z-10 pointer-events-none mt-6 sm:mt-8">
-        {/* Subtle Crowd Silhouette SVG */}
-        <div className="w-full h-20 sm:h-28 bg-gradient-to-t from-[#070712] via-[#06060e]/80 to-transparent opacity-90 flex items-end justify-center overflow-hidden">
+        {/* Subtle Crowd Silhouette SVG with soft gradient to let photos show through */}
+        <div className="w-full h-20 sm:h-28 bg-gradient-to-t from-[#070712] via-[#06060e]/50 to-transparent opacity-80 flex items-end justify-center overflow-hidden">
           <svg
             className="w-full h-16 sm:h-24 text-[#06060e] fill-current opacity-95 scale-105"
             viewBox="0 0 1200 120"
