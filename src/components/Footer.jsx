@@ -8,7 +8,6 @@ export const Footer = () => {
     { label: 'Home', href: '#home' },
     { label: 'About', href: '#about' },
     { label: 'Events', href: '#events' },
-    { label: 'Fresher Special', href: '#fresher' },
     { label: 'Gallery', href: '#gallery' },
     { label: 'Team', href: '#team' },
     { label: 'Contact', href: '#contact' },

@@ -2,7 +2,6 @@ import React, { useState, lazy, Suspense } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Hero } from '../components/Hero';
 import { Events } from '../components/Events';
-import { FresherSpecial } from '../components/FresherSpecial';
 import { Footer } from '../components/Footer';
 import { PartyAmbientBackground } from '../components/PartyAmbientBackground';
 import { EVENTS_DATA } from '../data/events';
@@ -54,9 +53,6 @@ export const Home = () => {
 
         {/* Signature Events — eagerly loaded (first below-fold section, high priority) */}
         <Events onRegisterEvent={handleOpenRegister} />
-
-        {/* Fresher Special Aarambh 2026 with Live Countdown */}
-        <FresherSpecial onRegister={handleOpenRegister} />
 
         {/* Below-the-fold sections — lazily loaded */}
         <Suspense fallback={<SectionSkeleton />}>

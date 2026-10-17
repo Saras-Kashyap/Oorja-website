@@ -226,40 +226,50 @@ export const Hero = ({ onOpenRegister }) => {
           ============================================================== */}
       <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center justify-center my-auto">
         
-        {/* LARGE OFFICIAL OORJA LOGO (MAIN FOCAL POINT) */}
+        {/* LARGE OFFICIAL OORJA LOGO (TRANSLUCENT GLASSMORPHIC WATERMARK EFFECT) */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="relative mt-4 sm:mt-6 mb-5 flex items-center justify-center"
+          className="relative mt-4 sm:mt-6 mb-3 flex items-center justify-center"
         >
-          {/* Ambient radiant glow behind the logo */}
-          <div className="absolute inset-0 bg-amber-400/20 blur-3xl rounded-full scale-125 pointer-events-none" />
-          {/* WebP logo with PNG fallback for older browsers */}
-          <picture>
+          {/* Subtle translucent ambient glow allowing photos to show through */}
+          <div className="absolute inset-0 bg-amber-400/10 blur-3xl rounded-full scale-125 pointer-events-none" />
+          
+          {/* WebP logo with PNG fallback - translucent watermark with blend-mode */}
+          <picture className="relative z-10">
             <source srcSet="/oorja-logo.webp" type="image/webp" />
             <img
               src="/oorja-logo.png"
               alt="Official OORJA Cultural Club Logo"
               width="500"
               height="212"
-              className="w-72 sm:w-96 md:w-[440px] lg:w-[500px] max-w-full h-auto object-contain filter brightness-0 invert drop-shadow-[0_0_28px_rgba(245,158,11,0.7)] hover:scale-105 transition-transform duration-300"
+              className="w-72 sm:w-96 md:w-[440px] lg:w-[500px] max-w-full h-auto object-contain filter brightness-0 invert opacity-70 mix-blend-screen drop-shadow-[0_0_22px_rgba(245,158,11,0.45)] hover:opacity-85 hover:scale-105 transition-all duration-300"
               fetchPriority="high"
             />
           </picture>
         </motion.div>
 
-        {/* AFFILIATION & LOCATION TEXT DIRECTLY BELOW LOGO */}
+        {/* TAGLINE & AFFILIATION TEXT (TRANSLUCENT WATERMARK INTEGRATION) */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.25 }}
-          className="flex flex-col items-center justify-center gap-1.5 mb-5 text-center"
+          className="flex flex-col items-center justify-center gap-1.5 mb-5 text-center mix-blend-screen"
         >
-          <p className="text-xs sm:text-sm md:text-base font-semibold tracking-[0.25em] uppercase text-amber-200">
+          {/* "Scintillating The Aura" Tagline */}
+          <div className="flex items-center justify-center gap-3 opacity-70">
+            <span className="w-8 sm:w-14 h-px bg-gradient-to-r from-transparent to-amber-300/50" />
+            <p className="font-cormorant italic text-base sm:text-lg md:text-xl text-amber-200/90 tracking-widest font-normal drop-shadow-[0_0_12px_rgba(245,158,11,0.3)]">
+              Scintillating The Aura
+            </p>
+            <span className="w-8 sm:w-14 h-px bg-gradient-to-l from-transparent to-amber-300/50" />
+          </div>
+
+          <p className="text-xs sm:text-sm md:text-base font-semibold tracking-[0.25em] uppercase text-amber-200/70 drop-shadow-[0_0_10px_rgba(245,158,11,0.25)]">
             COER UNIVERSITY • ROORKEE
           </p>
-          <p className="text-[11px] sm:text-xs md:text-sm tracking-wider uppercase text-amber-400/90 font-medium">
+          <p className="text-[11px] sm:text-xs md:text-sm tracking-wider uppercase text-amber-400/65 font-medium">
             • A Cultural Club of COER University
           </p>
         </motion.div>
