@@ -14,6 +14,7 @@ import {
   Heart
 } from 'lucide-react';
 import { EVENTS_DATA } from '../data/events';
+import { getOptimizedImageUrl, getResponsiveSrcSet } from '../utils/imageUtils';
 
 // Lazy-load modal — only mounted when user opens details
 const EventModal = lazy(() => import('./EventModal').then(m => ({ default: m.EventModal })));
@@ -64,28 +65,21 @@ export const Events = ({ onRegisterEvent }) => {
   const [direction, setDirection] = useState(0);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
 
-  // Touch swipe tracking references
+  // Touch swipe tracking references with vertical-scroll safety
   const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
   const touchEndX = useRef(0);
+  const touchEndY = useRef(0);
 
-  // Preload event photos for instant, zero-delay transitions
+  // Preload next event photo smoothly with compressed dimensions
   useEffect(() => {
-    Object.values(EVENT_SHOWCASE_CONFIG).forEach((config) => {
-      const img = new Image();
-      img.src = config.bgImage;
-    });
-  }, []);
-
-  // 7-second gentle auto-advance, paused on hover or touch
-  useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => {
-      paginate(1);
-    }, 7000);
-    return () => clearInterval(timer);
-  }, [currentIndex, isPaused]);
+    const nextIdx = (currentIndex + 1) % EVENTS_DATA.length;
+    const nextEvent = EVENTS_DATA[nextIdx];
+    const nextConfig = EVENT_SHOWCASE_CONFIG[nextEvent.id] || EVENT_SHOWCASE_CONFIG.zion;
+    const img = new Image();
+    img.src = getOptimizedImageUrl(nextConfig.bgImage, 1000, 75);
+  }, [currentIndex]);
 
   const paginate = (newDirection) => {
     setDirection(newDirection);
@@ -103,27 +97,39 @@ export const Events = ({ onRegisterEvent }) => {
     setCurrentIndex(index);
   };
 
-  // Touch swipe handlers for mobile
+  // Fluid touch swipe handlers with vertical jitter prevention
   const handleTouchStart = (e) => {
     touchStartX.current = e.targetTouches[0].clientX;
+    touchStartY.current = e.targetTouches[0].clientY;
+    touchEndX.current = e.targetTouches[0].clientX;
+    touchEndY.current = e.targetTouches[0].clientY;
   };
 
   const handleTouchMove = (e) => {
     touchEndX.current = e.targetTouches[0].clientX;
+    touchEndY.current = e.targetTouches[0].clientY;
   };
 
   const handleTouchEnd = () => {
     if (!touchStartX.current || !touchEndX.current) return;
-    const diff = touchStartX.current - touchEndX.current;
-    if (diff > 45) {
-      // Swiped left -> next event
-      paginate(1);
-    } else if (diff < -45) {
-      // Swiped right -> prev event
-      paginate(-1);
+    const deltaX = touchStartX.current - touchEndX.current;
+    const deltaY = touchStartY.current - touchEndY.current;
+
+    // Fluid horizontal swipe: only paginate when horizontal intent clearly exceeds vertical scrolling
+    // If vertical movement dominates, user is scrolling down/up — prevent jitter and accidental pagination!
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+      if (deltaX > 0) {
+        // Swiped left -> next event
+        paginate(1);
+      } else {
+        // Swiped right -> prev event
+        paginate(-1);
+      }
     }
     touchStartX.current = 0;
+    touchStartY.current = 0;
     touchEndX.current = 0;
+    touchEndY.current = 0;
   };
 
   // Keyboard arrow navigation
@@ -150,10 +156,10 @@ export const Events = ({ onRegisterEvent }) => {
     }
   };
 
-  // Smooth slide transition animation variants
+  // Hardware-accelerated 60fps slide transition animation variants
   const slideVariants = {
     enter: (dir) => ({
-      x: shouldReduceMotion ? 0 : dir > 0 ? 80 : -80,
+      x: shouldReduceMotion ? 0 : dir > 0 ? 55 : -55,
       opacity: 0,
       scale: shouldReduceMotion ? 1 : 0.98,
     }),
@@ -163,19 +169,19 @@ export const Events = ({ onRegisterEvent }) => {
       opacity: 1,
       scale: 1,
       transition: {
-        x: { type: 'spring', stiffness: 300, damping: 30 },
-        opacity: { duration: 0.35 },
-        scale: { duration: 0.35 },
+        x: { type: 'spring', stiffness: 280, damping: 28 },
+        opacity: { duration: 0.3 },
+        scale: { duration: 0.3 },
       },
     },
     exit: (dir) => ({
       zIndex: 0,
-      x: shouldReduceMotion ? 0 : dir < 0 ? 80 : -80,
+      x: shouldReduceMotion ? 0 : dir < 0 ? 55 : -55,
       opacity: 0,
       scale: shouldReduceMotion ? 1 : 0.98,
       transition: {
-        x: { type: 'spring', stiffness: 300, damping: 30 },
-        opacity: { duration: 0.25 },
+        x: { type: 'spring', stiffness: 280, damping: 28 },
+        opacity: { duration: 0.22 },
       },
     }),
   };
@@ -259,11 +265,7 @@ export const Events = ({ onRegisterEvent }) => {
         {/* ==============================================================
             SINGLE CENTERED EVENT CARD CAROUSEL (Requirement 1 & 2)
             ============================================================== */}
-        <div
-          className="relative max-w-5xl mx-auto flex items-center justify-center"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
+        <div className="relative max-w-5xl mx-auto flex items-center justify-center">
           {/* LEFT NAVIGATION ARROW (DESKTOP & TABLET) */}
           <button
             onClick={() => paginate(-1)}
@@ -290,6 +292,7 @@ export const Events = ({ onRegisterEvent }) => {
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            style={{ touchAction: 'pan-y' }}
           >
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
@@ -299,14 +302,20 @@ export const Events = ({ onRegisterEvent }) => {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="relative w-full min-h-[580px] sm:min-h-[620px] flex flex-col justify-between items-center p-6 sm:p-10 lg:p-14 overflow-hidden"
+                className="relative w-full min-h-[520px] sm:min-h-[620px] flex flex-col justify-between items-center p-5 sm:p-10 lg:p-14 overflow-hidden transform-gpu will-change-transform"
               >
                 {/* 1. IMMERSIVE EVENT BACKGROUND PHOTO INSIDE CARD */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                   <img
-                    src={activeConfig.bgImage}
+                    src={getOptimizedImageUrl(activeConfig.bgImage, 1000, 75)}
+                    srcSet={getResponsiveSrcSet(activeConfig.bgImage)}
+                    sizes="(max-width: 768px) 100vw, 1024px"
                     alt={activeEvent.title}
-                    className="w-full h-full object-cover object-center transform scale-105 transition-transform duration-[7000ms] ease-out filter brightness-[0.85]"
+                    width="1024"
+                    height="768"
+                    decoding="async"
+                    loading="lazy"
+                    className="w-full h-full object-cover object-center transform scale-105 transition-transform duration-[7000ms] ease-out filter brightness-[0.85] will-change-transform"
                   />
                 </div>
 

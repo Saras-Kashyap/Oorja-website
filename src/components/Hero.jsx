@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Calendar, MapPin, Play, ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { getOptimizedImageUrl, getResponsiveSrcSet } from '../utils/imageUtils';
 
 // Curated full-screen immersive background photos of cultural festivals & concerts
 const HERO_SLIDES = [
@@ -56,13 +57,18 @@ export const Hero = ({ onOpenRegister }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Preload background images so crossfade transitions are instantaneous
+  // Mobile touch swiping gesture tracking
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+  const touchEndX = useRef(0);
+  const touchEndY = useRef(0);
+
+  // Preload only the next background image smoothly without choking mobile network
   useEffect(() => {
-    HERO_SLIDES.forEach((slide) => {
-      const img = new Image();
-      img.src = slide.url;
-    });
-  }, []);
+    const nextIdx = (currentSlide + 1) % HERO_SLIDES.length;
+    const img = new Image();
+    img.src = getOptimizedImageUrl(HERO_SLIDES[nextIdx].url, 1200, 75);
+  }, [currentSlide]);
 
   // Countdown timer interval
   useEffect(() => {
@@ -95,6 +101,38 @@ export const Hero = ({ onOpenRegister }) => {
     setCurrentSlide(index);
   };
 
+  // Mobile touch swipe handlers (guarded against vertical page scroll jitter)
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+    touchStartY.current = e.targetTouches[0].clientY;
+    touchEndX.current = e.targetTouches[0].clientX;
+    touchEndY.current = e.targetTouches[0].clientY;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+    touchEndY.current = e.targetTouches[0].clientY;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const deltaX = touchStartX.current - touchEndX.current;
+    const deltaY = touchStartY.current - touchEndY.current;
+
+    // Only switch slide if horizontal intent clearly dominates vertical scrolling
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+      if (deltaX > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    touchStartX.current = 0;
+    touchStartY.current = 0;
+    touchEndX.current = 0;
+    touchEndY.current = 0;
+  };
+
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -105,6 +143,10 @@ export const Hero = ({ onOpenRegister }) => {
       className="relative min-h-screen w-full flex flex-col justify-between items-center pt-24 pb-8 overflow-hidden bg-[#06060e]"
       aria-roledescription="carousel"
       aria-label="OORJA Cultural Club Hero with Event Highlights"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      style={{ touchAction: 'pan-y' }}
     >
       {/* ==============================================================
           1. FULL-SCREEN BACKGROUND IMAGE SLIDESHOW (CAROUSEL)
@@ -120,12 +162,18 @@ export const Hero = ({ onOpenRegister }) => {
               }`}
             >
               <img
-                src={slide.url}
+                src={getOptimizedImageUrl(slide.url, 1200, 75)}
+                srcSet={getResponsiveSrcSet(slide.url)}
+                sizes="100vw"
                 alt={slide.title}
-                className={`w-full h-full object-cover object-center transform transition-transform duration-[6000ms] ease-out ${
+                width="1920"
+                height="1080"
+                decoding="async"
+                className={`w-full h-full object-cover object-center transform transition-transform duration-[6000ms] ease-out will-change-transform ${
                   isActive && !shouldReduceMotion ? 'scale-105' : 'scale-100'
                 }`}
                 loading={index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={index === 0 ? 'high' : 'low'}
               />
             </div>
           );
@@ -189,17 +237,17 @@ export const Hero = ({ onOpenRegister }) => {
         </svg>
       </div>
 
-      {/* FLOATING LIGHT PARTICLES — hidden when prefers-reduced-motion */}
+      {/* FLOATING LIGHT PARTICLES — only active on desktop/tablet to maintain 60fps on mobile */}
       {!shouldReduceMotion && (
-        <div className="absolute inset-0 z-10 pointer-events-none" aria-hidden="true">
-          {[...Array(14)].map((_, i) => (
+        <div className="hidden sm:block absolute inset-0 z-10 pointer-events-none" aria-hidden="true">
+          {[...Array(12)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute rounded-full bg-amber-400"
               style={{
-                width: `${(i % 4) * 2 + 3}px`,
-                height: `${(i % 4) * 2 + 3}px`,
-                left: `${(i * 7.5 + 5) % 95}%`,
+                width: `${(i % 3) * 2 + 3}px`,
+                height: `${(i % 3) * 2 + 3}px`,
+                left: `${(i * 8 + 5) % 95}%`,
                 top: `${(i * 8 + 15) % 85}%`,
                 opacity: 0.35,
                 filter: 'blur(1px)',
@@ -211,7 +259,7 @@ export const Hero = ({ onOpenRegister }) => {
                 opacity: [0.2, 0.7, 0.2],
               }}
               transition={{
-                duration: 4 + (i % 5) * 1.5,
+                duration: 4 + (i % 4) * 1.5,
                 repeat: Infinity,
                 ease: 'easeInOut',
                 delay: i * 0.3,
@@ -231,10 +279,10 @@ export const Hero = ({ onOpenRegister }) => {
           initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="relative mt-4 sm:mt-6 mb-3 flex items-center justify-center"
+          className="relative mt-3 sm:mt-6 mb-3 flex items-center justify-center transform-gpu will-change-transform"
         >
           {/* Subtle translucent ambient glow allowing photos to show through */}
-          <div className="absolute inset-0 bg-amber-400/10 blur-3xl rounded-full scale-125 pointer-events-none" />
+          <div className="absolute inset-0 bg-amber-400/10 blur-2xl sm:blur-3xl rounded-full scale-110 sm:scale-125 pointer-events-none transform-gpu" />
           
           {/* WebP logo with PNG fallback - translucent watermark with blend-mode */}
           <picture className="relative z-10">
@@ -244,7 +292,7 @@ export const Hero = ({ onOpenRegister }) => {
               alt="Official OORJA Cultural Club Logo"
               width="500"
               height="212"
-              className="w-72 sm:w-96 md:w-[440px] lg:w-[500px] max-w-full h-auto object-contain filter brightness-0 invert opacity-70 mix-blend-screen drop-shadow-[0_0_22px_rgba(245,158,11,0.45)] hover:opacity-85 hover:scale-105 transition-all duration-300"
+              className="w-64 sm:w-80 md:w-[440px] lg:w-[500px] max-w-[85vw] h-auto object-contain filter brightness-0 invert opacity-70 mix-blend-screen drop-shadow-[0_0_20px_rgba(245,158,11,0.45)] hover:opacity-85 hover:scale-105 transition-all duration-300 transform-gpu will-change-transform"
               fetchPriority="high"
             />
           </picture>

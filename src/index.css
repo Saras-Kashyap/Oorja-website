@@ -233,3 +233,28 @@
   }
 }
 
+/* Mobile GPU optimization for party ambient background to lock at 60fps */
+@media (max-width: 640px) {
+  .party-blob-1 {
+    animation-duration: 26s;
+  }
+  .party-blob-2 {
+    animation-duration: 30s;
+  }
+  .party-blob-3 {
+    animation-duration: 28s;
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+

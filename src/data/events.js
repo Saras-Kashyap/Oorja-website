@@ -150,6 +150,24 @@ export const GALLERY_ITEMS = [
     image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=80",
     caption: "The illuminated amphitheatre on a crisp Roorkee autumn night [Placeholder Archive Image].",
   },
+  {
+    id: 7,
+    title: "Aarambh Induction Energy",
+    category: "Fresher Welcome",
+    event: "Aarambh 2025",
+    aspect: "wide",
+    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
+    caption: "Electrifying confetti blast welcoming the newest campus inductees [Placeholder Archive Image].",
+  },
+  {
+    id: 8,
+    title: "Sufi Rhapsody & Strings",
+    category: "Acoustic Night",
+    event: "Deep Sandhya",
+    aspect: "square",
+    image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80",
+    caption: "Soul-stirring classical strings resonating under golden lanterns [Placeholder Archive Image].",
+  },
 ];
 
 export const TEAM_MEMBERS = [
