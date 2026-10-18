@@ -389,9 +389,11 @@ export const Events = ({ onRegisterEvent }) => {
                   </p>
 
                   {/* Description */}
-                  <p className="font-body text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl font-light mt-3 sm:mt-4 line-clamp-4 sm:line-clamp-none">
-                    {activeEvent.description}
-                  </p>
+                  {activeEvent.description && (
+                    <p className="font-body text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl font-light mt-3 sm:mt-4 line-clamp-4 sm:line-clamp-none">
+                      {activeEvent.description}
+                    </p>
+                  )}
 
                   {/* Metadata Pills: Date, Time & Venue */}
                   <div className="mt-5 sm:mt-6 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 text-xs sm:text-sm text-[#e8ded0]">

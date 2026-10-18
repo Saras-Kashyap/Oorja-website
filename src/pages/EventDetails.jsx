@@ -91,14 +91,16 @@ export const EventDetails = () => {
           
           {/* Details (7 cols) */}
           <div className="lg:col-span-7 space-y-8">
-            <div className="p-8 rounded-3xl bg-[#11111a] border border-white/10 space-y-4">
-              <h3 className="font-cinzel text-xl font-bold text-white">
-                About The Event
-              </h3>
-              <p className="text-sm text-neutral-300 leading-relaxed font-light">
-                {event.description}
-              </p>
-            </div>
+            {event.description && (
+              <div className="p-8 rounded-3xl bg-[#11111a] border border-white/10 space-y-4">
+                <h3 className="font-cinzel text-xl font-bold text-white">
+                  About The Event
+                </h3>
+                <p className="text-sm text-neutral-300 leading-relaxed font-light">
+                  {event.description}
+                </p>
+              </div>
+            )}
 
             {event.highlights && (
               <div className="p-8 rounded-3xl bg-[#11111a] border border-white/10 space-y-4">

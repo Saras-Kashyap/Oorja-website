@@ -8,8 +8,7 @@ export const EVENTS_DATA = [
     title: "ZION",
     subtitle: "The Flagship Annual Cultural Fest",
     tagline: "An immersive celebration of music, energy and unforgettable moments.",
-    description:
-      "ZION is OORJA's monumental flagship cultural extravaganza. Bringing together over 5,000+ enthusiastic students from all 13 colleges of COER University and across North India, ZION transforms the campus into a pulsating arena of high-voltage music, battle of the bands, classical & contemporary dance showdowns, fashion pageants, and celebrity guest concerts under the night sky.",
+    description: "",
     date: "November 14-16, 2026 [Placeholder]",
     time: "5:00 PM onwards [Placeholder]",
     venue: "COER University Campus, Roorkee — exact venue TBA",
