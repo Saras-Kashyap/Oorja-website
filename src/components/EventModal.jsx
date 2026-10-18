@@ -135,14 +135,16 @@ export const EventModal = ({ event, isOpen, onClose, onRegistered }) => {
           {/* Modal Body */}
           <div className="p-6 sm:p-8 max-h-[60vh] overflow-y-auto space-y-6 text-[#ded8cc]">
             {/* Description */}
-            <div>
-              <h4 className="text-xs uppercase font-bold tracking-widest text-amber-400 mb-2">
-                About The Experience
-              </h4>
-              <p className="text-sm leading-relaxed text-neutral-300 font-light">
-                {event.description}
-              </p>
-            </div>
+            {event.description && (
+              <div>
+                <h4 className="text-xs uppercase font-bold tracking-widest text-amber-400 mb-2">
+                  About The Experience
+                </h4>
+                <p className="text-sm leading-relaxed text-neutral-300 font-light">
+                  {event.description}
+                </p>
+              </div>
+            )}
 
             {/* Highlights List */}
             {event.highlights && (
